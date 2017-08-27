@@ -12,7 +12,7 @@ then
 fi
 
 ./configure --prefix="${PREFIX}" --enable-utf --enable-unicode-properties
-make
+make -j${CPU_COUNT} ${VERBOSE_AT}
 make check
 make install
 
