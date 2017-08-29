@@ -1,4 +1,4 @@
-{% set version = "8.39" %}
+{% set version = "8.41" %}
 
 package:
   name: pcre
@@ -7,7 +7,7 @@ package:
 source:
   fn: pcre-{{ version }}.tar.gz
   url: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-{{ version }}.tar.gz
-  sha256: ccdf7e788769838f8285b3ee672ed573358202305ee361cfec7a4a4fb005bbc7
+  sha256: 244838e1f1d14f7e2fa7681b857b3a8566b74215f28133f14a8f5e59241b682c
 
 build:
   number: 0
@@ -18,6 +18,8 @@ build:
     
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - python       # [win]
     - cmake        # [win]
     - pkg-config   # [unix]
@@ -25,8 +27,6 @@ requirements:
     - vc   9       # [win and py27]
     - vc  10       # [win and py34]
     - vc  14       # [win and py>=35]
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
     
   run:
     - vc   9       # [win and py27]
