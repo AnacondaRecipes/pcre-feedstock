@@ -10,10 +10,8 @@ source:
   sha256: 244838e1f1d14f7e2fa7681b857b3a8566b74215f28133f14a8f5e59241b682c
 
 build:
-  number: 0
-  features:
-    - vc{{ vc }}   # [win]
-    
+  number: 1
+
 requirements:
   build:
     - {{ compiler('c') }}
