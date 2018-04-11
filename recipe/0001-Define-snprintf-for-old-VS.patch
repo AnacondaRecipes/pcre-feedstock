@@ -6,7 +6,7 @@
  
 +#if defined(_MSC_VER)
 +#if (_MSC_VER < 1900)
-+#define snprintf(a, b, c, ...) _snprintf_s( a, b, __VA_ARGS__)
++#define snprintf(_o, _n, _f, ...) _snprintf_s(_o, _n, _n, _f, __VA_ARGS__)
 +#endif
 +#endif
 +
