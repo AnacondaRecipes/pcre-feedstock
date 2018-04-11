@@ -1,4 +1,4 @@
-{% set version = "8.41" %}
+{% set version = "8.42" %}
 
 package:
   name: pcre
@@ -7,10 +7,14 @@ package:
 source:
   fn: pcre-{{ version }}.tar.gz
   url: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-{{ version }}.tar.gz
-  sha256: 244838e1f1d14f7e2fa7681b857b3a8566b74215f28133f14a8f5e59241b682c
+  sha256: 69acbc2fbdefb955d42a4c606dfde800c2885711d2979e356c0636efde9ec3b5
 
 build:
-  number: 1
+  number: 0
+  run_exports:
+    # mostly OK, but some scary symbol removal.  Let's try for trusting them.
+    #    https://abi-laboratory.pro/tracker/timeline/pcre/
+    - {{ pin_subpackage('pcre', max_pin='x') }}
 
 requirements:
   build:
@@ -19,7 +23,16 @@ requirements:
     - cmake        # [win]
     - pkg-config   # [unix]
     - libtool      # [unix]
-    
+  # We need something (without run_exports) in here as otherwise:
+  # 1. host prefix is not created
+  # 2. strong run_exports do not get installed into host prefix
+  # 3. pyldd (correctly) identifies that:
+  #    ERROR (pcre,lib/libpcrecpp.0.dylib): Needed DSO /usr/lib/libc++.1.dylib not found in any CDT/compiler package, nor the whitelist?!
+  # (the reason we do not want run exports is because we do not want any unnecessary dependencies so a build tool will suffice).
+  # ping @msarahan
+  host:
+    - cmake  # [unix]
+
 test:
   commands:
     # CLI tests.
