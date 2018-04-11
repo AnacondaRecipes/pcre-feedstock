@@ -8,6 +8,8 @@ source:
   fn: pcre-{{ version }}.tar.gz
   url: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-{{ version }}.tar.gz
   sha256: 69acbc2fbdefb955d42a4c606dfde800c2885711d2979e356c0636efde9ec3b5
+  patches:
+    - 0001-Define-snprintf-for-old-VS.patch
 
 build:
   number: 0
