@@ -1,10 +1,20 @@
 
+echo cmake -G "NMake Makefiles" ^
+    -D CMAKE_BUILD_TYPE=Release ^
+    -D BUILD_SHARED_LIBS=ON ^
+    -D PCRE_SUPPORT_UTF=ON ^
+    -D PCRE_SUPPORT_UNICODE_PROPERTIES=ON ^
+    -D CMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+    --trace --debug-output --debug-trycompile ^
+    .
+
 cmake -G "NMake Makefiles" ^
     -D CMAKE_BUILD_TYPE=Release ^
     -D BUILD_SHARED_LIBS=ON ^
     -D PCRE_SUPPORT_UTF=ON ^
     -D PCRE_SUPPORT_UNICODE_PROPERTIES=ON ^
     -D CMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+    --trace --debug-output --debug-trycompile ^
     .
 if errorlevel 1 exit 1
 
