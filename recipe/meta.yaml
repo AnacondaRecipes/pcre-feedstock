@@ -27,6 +27,7 @@ requirements:
     - cmake        # [win]
     - pkg-config   # [unix]
     - libtool      # [unix]
+    - make         # [unix]
   # We need something (without run_exports) in here as otherwise:
   # 1. host prefix is not created
   # 2. strong run_exports do not get installed into host prefix
