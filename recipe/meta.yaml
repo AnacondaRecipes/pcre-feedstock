@@ -1,4 +1,4 @@
-{% set version = "8.42" %}
+{% set version = "8.43" %}
 
 package:
   name: pcre
@@ -7,7 +7,7 @@ package:
 source:
   fn: pcre-{{ version }}.tar.gz
   url: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-{{ version }}.tar.gz
-  sha256: 69acbc2fbdefb955d42a4c606dfde800c2885711d2979e356c0636efde9ec3b5
+  sha256: 0b8e7465dc5e98c757cc3650a20a7843ee4c3edf50aaf60bb33fd879690d2c73
   patches:
     - 0001-Define-snprintf-for-old-VS.patch
     # CMake is brain-damaged. It looks around on PATH for libs. Yeah. Completely crazy.
