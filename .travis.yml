@@ -3,37 +3,20 @@
 
 language: generic
 
-os: osx
-osx_image: xcode6.4
-
 env:
   global:
     # The BINSTAR_TOKEN secure variable. This is defined canonically in conda-forge.yml.
-    - secure: "TdzMUYVwy6p8gyBLyZfGUImyb8V9HGBxAjIoEQXtVnMcpfBBbmx46sJSf+Vs/AwvmJhtpyjJYfNPRGrc/3nQc0h2/fEecb4e1KXb1421u891YM0hNQE56jcM7PUHB/meKPoOxFt6vSiuZ9gz3e+gyOLzPETdgy8zpg3N5jnanFIEcmf0VsGS0QdbcLWoKEpIN5L5wtIPe2hfugkitoaLW8/GTiXED5P4ngmNUn8wPHskcDkz5OuqTsr8uo2U5WogHaFq+7e/irMEIS0Nv6sqfojphMpy5426tWNfblOqHJStEjQlTdJCt5hgrGDGPjlQLLjwP4RD5HzO9rAzVKpj9VkOGfFncBtG2wuvcW1QhePMxyAcAF7pFC1+DLwg1JC/yIboUm6EAmRxZHYOjXXp/ih6U/CFyKON20GxXB/znv3t14mfIl8qXwya5fYGNlM+AvevjmLgJ07wL2uG7o/FvuZQXxqXiTIkqra3HsP9UVomuZKoily+4tlsXiq1LdItO3QZG5lRNCGnMB+HjpHPDDXPa/sEqpVIg6l6y/shQilP3zsKDJoPjH62Pwcq1u6SqhBzLbf9yMZ30UFBOlB/gY5SjGP6lVtJehhsc3kxJ5oVgeRLIYAfOthqS1KXksXQMVZad/gDY+xZLeRBpucIbfjIjhWdh271rjq4oFksxj0="
+    - secure: "NHRBHqmkD+vQPpTXeIeUGnbw3smMxnwo/kHL5AoNK4ybqMI839JZbJ0vBPUfzCilwtbYB0UAHJdAjldozSAMb49tGsvLP3AjJrBWHLEjhQj48lPLgNlu4bbfqg5p448n3+0gQ+t/LapTdKrYcSxzhAm90XskqqbSXSn9pXvCO3Htlcyv8NmXsLzyo43QYtUQBwT4XwiSbo1Vx7/D4VFYxPAO0WjjbkRYACDVDm1H0D4FpNkw5Z3e+33QGmzIrIi59DN4Stu0y2OXcNylqIOPBzW18VyyZAkzbRWoruZ4KlHVf1YcLEWkIg2fi2um0XhaMe+mwZLzXnzTE7H1Jri9C9AUV2+/75XIJx/g+sDPv+dwMHBvpMD2cZln2prw+ggIhibkCzwq60iNoYga0wa1wJPNNsLVMrfP060NB4h1r4AEZ45PULwe6i7bxlrQrAJ194C7+MN2+vmtoOoU1ia0PfmHXSd4iONLm//hrBTVMu3QOUc1INs/FDabNvoIlf5keKDLYsE/pFrtg+a7YpxyNzOy1AJ5twCl0fBS4xdUp/mrKMw8/k/Ofg8yDEIkQFe/+wc6vUSl3pcIkW3NMfc90ckABIrbMWOvEZrBzxI/m+3FXEM67g4p40gZ9Jqv1beAgcPtUnbgZ8Ap6kHIg7852RBboq3Yi5GXln2ml0rxzg4="
 
-
-before_install:
-    # Remove homebrew.
-    - brew remove --force --ignore-dependencies $(brew list)
-    - brew cleanup -s
-    - rm -rf $(brew --cache)
-
-install:
-    - |
-      MINICONDA_URL="https://repo.continuum.io/miniconda"
-      MINICONDA_FILE="Miniconda3-latest-MacOSX-x86_64.sh"
-      curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
-      bash $MINICONDA_FILE -b
-
-      source /Users/travis/miniconda3/bin/activate root
-      conda config --remove channels defaults
-      conda config --add channels defaults
-      conda config --add channels conda-forge
-      conda config --set show_channel_urls true
-      conda install --yes --quiet conda-forge-build-setup
-      source run_conda_forge_build_setup
+matrix:
+  include:
+    - env: CONFIG=linux_ppc64le_ UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux
+      arch: ppc64le
 
 script:
-  - conda build ./recipe
+  - export CI=travis
+  - export GIT_BRANCH="$TRAVIS_BRANCH"
 
-  - upload_or_check_non_existence ./recipe conda-forge --channel=main
+
+  - if [[ ${PLATFORM} =~ .*linux.* ]]; then ./.scripts/run_docker_build.sh; fi
