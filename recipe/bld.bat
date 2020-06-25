@@ -5,7 +5,6 @@ cmake -G "NMake Makefiles" ^
     -D PCRE_SUPPORT_UNICODE_PROPERTIES=ON ^
     -D CMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
     -D CMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
-    --trace --debug-output --debug-trycompile ^
     .
 if errorlevel 1 exit 1
 

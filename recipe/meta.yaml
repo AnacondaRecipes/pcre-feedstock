@@ -9,6 +9,7 @@ source:
   sha256: aecafd4af3bd0f3935721af77b889d9024b2e01d96b58471bd91a3063fb47728
   patches:
     - 0001-Define-snprintf-for-old-VS.patch
+    - 0002-Workaround-CMake-FIND_PACKAGE-looking-on-PATH-misfeature.patch
 
 build:
   number: 0
