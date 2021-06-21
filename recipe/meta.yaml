@@ -27,6 +27,7 @@ requirements:
     - pkg-config   # [unix]
     - libtool      # [unix]
     - make         # [unix]
+    - patch        # [unix]
 
 test:
   commands:
