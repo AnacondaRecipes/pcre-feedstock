@@ -12,7 +12,7 @@ source:
     - 0002-Workaround-CMake-FIND_PACKAGE-looking-on-PATH-misfeature.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # mostly OK, but some scary symbol removal.  Let's try for trusting them.
     #    https://abi-laboratory.pro/tracker/timeline/pcre/
